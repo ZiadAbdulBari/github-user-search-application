@@ -2,23 +2,27 @@ class Data{
     constructor(username){
       this.userName = username; 
     }
+    
     async getUserInfo(){
         let mainData=await fetch(`https://api.github.com/users/${this.userName}`)
         .then(function(data){
             return data.json();
         })
-        return{
-            repos: mainData.public_repos,
-            gists: mainData.public_gists,
-            followers: mainData.followers,
-            following: mainData.following,
-            company :mainData.company,
-            location: mainData.location,
-            member: mainData.created_at,
-            blog: mainData.blog,
-            avatar_url: mainData.avatar_url,
-            html_url: mainData.html_url
-        }
+        
+            return{
+                repos: mainData.public_repos,
+                gists: mainData.public_gists,
+                followers: mainData.followers,
+                following: mainData.following,
+                company :mainData.company,
+                location: mainData.location,
+                member: mainData.created_at,
+                blog: mainData.blog,
+                avatar_url: mainData.avatar_url,
+                html_url: mainData.html_url,
+                login: mainData.login
+            }
+        
         // return mainData;
     }
     async getRepositories(){
@@ -57,16 +61,31 @@ class Ui{
         this.profile = document.getElementById('profile');
     }
     showUserInfo(data){
-        this.repos.textContent =`Public Repos ${data.repos}`;
-        this.gists.textContent =`Public Gists ${data.gists}`;
-        this.followers.textContent = `Followers ${data.followers}`;
-        this.following.textContent = `Following ${data.following}`;
-        this.company.textContent = `Company: ${data.company}`;
-        this.blog.textContent = `Website/Blog: ${data.blog}`;
-        this.location.textContent = `Location: ${data.location}`;
-        this.member.textContent = `Member Since: ${data.member}`;
-        this.picture.setAttribute("src", data.avatar_url);
-        this.profile.setAttribute('href', data.html_url);
+        if(data.login===undefined){
+
+            this.repos.textContent =`Public Repos`;
+            this.gists.textContent =`Public Gists`;
+            this.followers.textContent = `Followers`;
+            this.following.textContent = `Following`;
+            this.company.textContent = `Company: `;
+            this.blog.textContent = `Website/Blog: `;
+            this.location.textContent = `Location: `;
+            this.member.textContent = `Member Since: `;
+            this.picture.removeAttribute("src", data.avatar_url);
+            this.profile.removeAttribute('href', data.html_url);
+        }
+        else{
+            this.repos.textContent =`Public Repos ${data.repos}`;
+            this.gists.textContent =`Public Gists ${data.gists}`;
+            this.followers.textContent = `Followers ${data.followers}`;
+            this.following.textContent = `Following ${data.following}`;
+            this.company.textContent = `Company: ${data.company}`;
+            this.blog.textContent = `Website/Blog: ${data.blog}`;
+            this.location.textContent = `Location: ${data.location}`;
+            this.member.textContent = `Member Since: ${data.member}`;
+            this.picture.setAttribute("src", data.avatar_url);
+            this.profile.setAttribute('href', data.html_url);
+        }
     }
 
 
