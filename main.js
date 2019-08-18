@@ -6,7 +6,7 @@ class Data{
     }
     
     async getUserInfo(){
-        let mainData=await fetch(`https://api.github.com/users/${this.userName}/3bec3e48dc44dbc52fa072dd0f688ebe190648b1`)
+        let mainData=await fetch(`https://api.github.com/users/${this.userName}`)
         .then(function(data){
             return data.json();
         })
@@ -28,7 +28,7 @@ class Data{
         // return mainData;
     }
     async getRepositories(){
-        let reposData=await fetch(`https://api.github.com/users/${this.userName}/3bec3e48dc44dbc52fa072dd0f688ebe190648b1/repos?sort=updated`)
+        let reposData=await fetch(`https://api.github.com/users/${this.userName}/repos?sort=updated`)
         .then(function(data){
             return data.json();
         })
